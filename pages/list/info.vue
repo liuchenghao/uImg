@@ -1,29 +1,10 @@
 <template>
   <div class="starting-page">
-    <map class="map-didi" id="map-didi" :latitude="latitude" :longitude="longitude" :markers="markers"
-      @regionchange="regionChange" show-location>
-
-      <cover-image class="location-marker" src="/static/img/location.png" @click.stop="onClickLocation">
-      </cover-image>
-
-      <cover-view class="center-marker">
-        <cover-view class="text-center">最快{{minutes}}分钟接驾</cover-view>
-        <cover-image class="inverted-triangle" src="/static/img/triangle-down.png"></cover-image>
-        <cover-image class="img-center" src="/static/img/marker2.png"></cover-image>
-      </cover-view>
-
-      <cover-view :class="isShowInfo? 'address large': 'address'" @touchstart="touchStart" @touchmove="touchMove"
-        @touchend="touchEnd">
-        <view v-if="!isShowInfo" class="uma-order-info">
-          订单编号: {{orderNum}}
-        </view>
-        <info v-else-if="isShowInfo"></info>
-      </cover-view>
-    </map>
+    <uni-steps :options="list" active-color="#007AFF" :active="active" direction="column" />
   </div>
 </template>
 <script>
-  import info from '@/components/order/info';
+  // import info from '@/components/order/info';
   import {
     mapMutations,
     mapActions,
@@ -31,16 +12,27 @@
   } from 'vuex';
   export default {
     onShow() {
-      //     保证后面可以拿到经纬度
-      this.initLocation();
-      this.mapCtx = uni.createMapContext("map-didi"); // 地图组件的id
-    },
-    components: {
-      info
+      // //     保证后面可以拿到经纬度
+      // this.initLocation();
+      // this.mapCtx = uni.createMapContext("map-didi"); // 地图组件的id
     },
     data() {
       return {
-        orderNum: 88798822004820112,
+        active: 1,
+        list: [{
+          title: '买家下单',
+          desc: '2018-11-11'
+        }, {
+          title: '卖家发货',
+          desc: '2018-11-12'
+        }, {
+          title: '买家签收',
+          desc: '2018-11-13'
+        }, {
+          title: '交易完成',
+          desc: '2018-11-14'
+        }],
+        /* orderNum: 88798822004820112,
         isShowInfo: false,
         latitude: 39.909,
         longitude: 116.39742,
@@ -57,10 +49,10 @@
           // iconPath: '../../../static/location.png'
         }],
         startX: 0,
-        endX: 0
+        endX: 0 */
       };
     },
-    computed: {
+    /* computed: {
       ...mapState("passenger/index", [
         'curNavIndex',
         'curCity',
@@ -68,9 +60,9 @@
         'startFormattedPlace',
         'startPosition'
       ])
-    },
+    }, */
     methods: {
-      ...mapActions("passenger/index", {
+      /* ...mapActions("passenger/index", {
         saveStartPlace: 'SET_START_PLACE',
         saveFormattedStartPlace: 'SET_FORMATTED_START_PLACE',
         saveCurCity: 'SET_CUR_CITY',
@@ -194,7 +186,7 @@
           car.iconPath = `/static/img/car/cart${this.curNavIndex + 1}.png`;
           this.markers.push(car);
         }
-      }
+      } */
 
     },
   };
@@ -263,6 +255,7 @@
           height: 40px;
         }
       }
+
       .address {
         // display: flex;
         // align-items: center;
@@ -276,10 +269,12 @@
         box-sizing: border-box;
         overflow: hidden;
         background-color: #fff;
-        &.large{
+
+        &.large {
           height: auto;
         }
-        .uma-order-info{
+
+        .uma-order-info {
           padding-left: 12px;
           height: 43px;
           line-height: 43px;

@@ -11,6 +11,9 @@
     "pages": [{
       "path": "index",
       "style": {}
+    },{
+      "path": "info",
+      "style": {}
     }]
   }, {
     "root": "pages/sysm",

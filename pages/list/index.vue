@@ -6,14 +6,15 @@
 			:left-gap="leftGap"
 			:right-gap="rightGap"
 			:column-gap="columnGap"
-			@changeList="changeList">
+			@changeList="changeList"
+      @imageClick="info">
 			<!-- 第一列数据 -->
 			<template v-slot:list1>
 				<!-- 为了磨平部分平台的BUG，必须套一层view -->
 				<view>
 					<view v-for="(item, index) in list1"
 						:key="item.id"
-						class="waterfall-item">
+						class="waterfall-item" >
 						<view class="waterfall-item__image" :style="[imageStyle(item)]">
 							<image :src="item.image" mode="widthFix" :style="{width:item.width+'px'}"></image>
 						</view>
@@ -84,6 +85,12 @@
 			this.list = data;
 		},
 		methods: {
+      info(){
+        let url = "/pages/list/info";
+        uni.navigateTo({
+          url
+        });
+      },
 			// 这点非常重要：e.name在这里返回是list1或list2，要手动将数据追加到相应列
 			changeList(e){
 				this[e.name].push(e.value);
