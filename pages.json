@@ -1,0 +1,44 @@
+{
+  "pages": [{
+    // "path": "pages/test/charts",
+    "path": "pages/auth/login",
+    "style": {
+      "navigationBarTitleText": "阳光出行-司机端"
+    }
+  }],
+  "subPackages": [ {
+    "root": "pages/list",
+    "pages": [{
+      "path": "index",
+      "style": {}
+    }]
+  }, {
+    "root": "pages/sysm",
+    "pages": [ {
+      "path": "logs",
+      "style": {}
+    }]
+  }, {
+    "root": "pages/auth",
+    "pages": [ {
+      "path": "login",
+      "style": {}
+    }, {
+      "path": "register",
+      "style": {}
+    }]
+  }],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "阳光出行-司机端",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "app-plus": {
+      "background": "#efeff4"
+    },
+    "h5": {
+      // h5 不显示顶部导航栏
+      "titleNView": false
+    }
+  }
+}

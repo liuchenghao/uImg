@@ -1,0 +1,26 @@
+{
+  "name": "uma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liuchenghao/uMa.git"
+  },
+  "keywords": [
+    "uMa"
+  ],
+  "author": "liu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/liuchenghao/uMa/issues"
+  },
+  "homepage": "https://github.com/liuchenghao/uMa#readme",
+  "dependencies": {
+    "@dcloudio/uni-cli-shared": "2.0.0-31820210406002",
+    "webpack": "^4.46.0"
+  }
+}
