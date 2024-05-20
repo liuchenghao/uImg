@@ -1,0 +1,4 @@
+export const GET_LEVEL_MESSAGE = 'GET_LEVEL_MESSAGE';
+
+export const UNLOCK_MESSAGE = 'UNLOCK_MESSAGE';
+

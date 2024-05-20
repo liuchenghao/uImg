@@ -12,7 +12,7 @@
     computed: {
       ...mapState({
         categories: state => {
-          console.info(arguments, "========", state.categories);
+          // console.info(arguments, "========", state.categories);
           return state.categories;
         }
       })
@@ -23,7 +23,7 @@
       // let aa = mapState({
       //   categories: state => state.categories
       // })
-      console.info(this.categories, "=========");
+      // console.info(this.categories, "=========");
       let id = Math.random() > 0.5 ? Date.now() : undefined;
       this.$http
         .post(
@@ -61,7 +61,7 @@
     },
     onShow: function() {
       console.log('App Show');
-      console.log(this.$store, "=======");
+      // console.log(this.$store, "=======");
     },
     onHide: function() {
       console.log('App Hide');

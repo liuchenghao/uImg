@@ -55,6 +55,9 @@
 </template>
 <script>
 	// import { guid } from '@/uni_modules/uv-ui-tools/libs/function/index.js'
+  import {
+    mapActions
+  } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -81,10 +84,54 @@
 			}
 		},
 		async onLoad() {
-			const { data } = await this.getData();
-			this.list = data;
+      
+			/* const { data } = await this.getData();
+			this.list = data; */
+      this.getList();
 		},
 		methods: {
+      ...mapActions("list/index", {
+        getPhotoList:'GET_PHOTO_LIST',
+        getTimeList: 'GET_TIME_LIST',
+        getInfoList: 'GET_INFO_LIST',
+      }),
+      getList(){
+        let params = {
+           tId: "tId202405180002"
+        };
+        this.getPhotoList({
+          params
+        }).then((res)=>{
+          let {
+            success,
+            data
+          } = res;
+          if(success){
+            let {
+              tid: id,
+              title,
+              coverImage,
+              foreword: desc
+            } = data;
+            let {
+              absolutePath: image,
+              width: w,
+              height: h
+            } = coverImage;
+            let item = {
+              id,
+              // allowEdit: i==0,
+              image,
+              w,
+              h,
+              title,
+              desc
+             };
+            this.list.push(item);
+          }
+          console.info(res, "++++++++++");
+        });
+      },
       info(){
         let url = "/pages/list/info";
         uni.navigateTo({

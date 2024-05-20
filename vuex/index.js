@@ -13,7 +13,7 @@ const state = {
 // mutations
 const mutations = {
   [types.SET_LOGIN_INFO](state, info){
-    console.info("-------info-------", info);
+    // console.info("-------info-------", info);
     state.loginInfo = info;
   },
 };

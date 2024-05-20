@@ -3,7 +3,7 @@
     // "path": "pages/test/charts",
     "path": "pages/auth/login",
     "style": {
-      "navigationBarTitleText": "阳光出行-司机端"
+      "navigationBarTitleText": "阳光图集"
     }
   }],
   "subPackages": [ {
@@ -33,7 +33,7 @@
   }],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "阳光出行-司机端",
+    "navigationBarTitleText": "阳光图集",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8",
     "app-plus": {

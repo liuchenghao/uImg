@@ -15,9 +15,12 @@ if (
 const config = {
   devServer: {
     proxy: {
-      '/static': {
-        target: 'https://api-remote.xxxx.com',
-      }
+      '/album': {
+        target: 'http://39.106.156.200',
+      },
+      '/laolao': {
+        target: 'http://39.106.156.200',
+      },
     },
   },
   configureWebpack: {
