@@ -1,6 +1,16 @@
 <template>
   <div class="starting-page">
-    <uni-steps :options="list" active-color="#007AFF" :active="active" direction="column" />
+    <uni-swiper-dot class="uni-swiper-dot-box" @clickItem=clickItem :info="list" :current="current" :mode="mode"
+        :dots-styles="dotsStyles" field="content">
+        <swiper class="swiper-box" @change="change" :current="swiperDotIndex">
+          <swiper-item v-for="(item, index) in list" :key="index">
+            <view class="swiper-item" :class="'swiper-item' + index">
+              {{item.absolutePath}}
+              <image :src="item.thumbnail.absolutePath" mode="aspectFit"></image>
+            </view>
+          </swiper-item>
+        </swiper>
+      </uni-swiper-dot>
   </div>
 </template>
 <script>
@@ -18,38 +28,52 @@
     },
     data() {
       return {
-        active: 1,
-        list: [{
-          title: '买家下单',
-          desc: '2018-11-11'
-        }, {
-          title: '卖家发货',
-          desc: '2018-11-12'
-        }, {
-          title: '买家签收',
-          desc: '2018-11-13'
-        }, {
-          title: '交易完成',
-          desc: '2018-11-14'
-        }],
-        /* orderNum: 88798822004820112,
-        isShowInfo: false,
-        latitude: 39.909,
-        longitude: 116.39742,
-        scale: 16,
-        markers: [],
-        minutes: this.getRandomNum(),
-        covers: [{
-          latitude: 39.909,
-          longitude: 116.39742,
-          // iconPath: '../../../static/location.png'
-        }, {
-          latitude: 39.90,
-          longitude: 116.39,
-          // iconPath: '../../../static/location.png'
-        }],
-        startX: 0,
-        endX: 0 */
+        active: 10,
+        list: [],
+        info: [{
+        						colorClass: 'uni-bg-red',
+        						url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
+        						content: '内容 A'
+        					},
+        					{
+        						colorClass: 'uni-bg-green',
+        						url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
+        						content: '内容 B'
+        					},
+        					{
+        						colorClass: 'uni-bg-blue',
+        						url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
+        						content: '内容 C'
+        					}
+        				],
+        				dotStyle: [{
+        						backgroundColor: 'rgba(0, 0, 0, .3)',
+        						border: '1px rgba(0, 0, 0, .3) solid',
+        						color: '#fff',
+        						selectedBackgroundColor: 'rgba(0, 0, 0, .9)',
+        						selectedBorder: '1px rgba(0, 0, 0, .9) solid'
+        					},
+        					{
+        						backgroundColor: 'rgba(255, 90, 95,0.3)',
+        						border: '1px rgba(255, 90, 95,0.3) solid',
+        						color: '#fff',
+        						selectedBackgroundColor: 'rgba(255, 90, 95,0.9)',
+        						selectedBorder: '1px rgba(255, 90, 95,0.9) solid'
+        					},
+        					{
+        						backgroundColor: 'rgba(83, 200, 249,0.3)',
+        						border: '1px rgba(83, 200, 249,0.3) solid',
+        						color: '#fff',
+        						selectedBackgroundColor: 'rgba(83, 200, 249,0.9)',
+        						selectedBorder: '1px rgba(83, 200, 249,0.9) solid'
+        					}
+        				],
+        				modeIndex: -1,
+        				styleIndex: -1,
+        				current: 0,
+        				mode: 'default',
+        				dotsStyles: {},
+        				swiperDotIndex: 0
       };
     },
     /* computed: {
@@ -61,7 +85,57 @@
         'startPosition'
       ])
     }, */
+    async onLoad(options) {
+      this.getList(options.id);
+    },
     methods: {
+      ...mapActions("list/index", {
+        getPhotoList:'GET_PHOTO_LIST',
+        getTimeList: 'GET_TIME_LIST',
+        getInfoList: 'GET_INFO_LIST',
+      }),
+      change(e) {
+        this.current = e.detail.current;
+      },
+      selectStyle(index) {
+        this.dotsStyles = this.dotStyle[index];
+        this.styleIndex = index;
+      },
+      selectMode(mode, index) {
+        this.mode = mode;
+        this.modeIndex = index;
+        this.styleIndex = -1;
+        this.dotsStyles = this.dotStyle[0];
+      },
+      clickItem(e) {
+        this.swiperDotIndex = e;
+      },
+      onBanner(index) {
+        console.log(22222, index);
+      },
+      click() {
+        let url = "/pages/list/list";
+        uni.navigateTo({
+          url
+        });
+      },
+      getList(id){
+        let params = {
+           pgId: id
+        };
+        this.getInfoList({
+          params
+        }).then((res)=>{
+          let {
+            success,
+            data
+          } = res;
+          if(success){
+            this.list = data;
+          }
+        });
+      },
+      
       /* ...mapActions("passenger/index", {
         saveStartPlace: 'SET_START_PLACE',
         saveFormattedStartPlace: 'SET_FORMATTED_START_PLACE',
@@ -198,7 +272,7 @@
   .starting-page {
     width: 100%;
     height: 100vh;
-    overflow: hidden;
+    overflow: auto;
 
     .search-bar-wrapper {
       width: 100%;
@@ -283,3 +357,120 @@
     }
   }
 </style>
+<style scoped lang="scss">
+  .starting-page{
+    height: 100%;
+  }
+	.swiper-box {
+		height: 100vh;
+	}
+
+	.swiper-item {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		color: #fff;
+	}
+
+	.swiper-item0 {
+		background-color: #cee1fd;
+	}
+
+	.swiper-item1 {
+		background-color: #b2cef7;
+	}
+
+	.swiper-item2 {
+		background-color: #cee1fd;
+	}
+
+	.image {
+		width: 750rpx;
+	}
+
+	/* #ifndef APP-NVUE */
+	::v-deep .image img {
+		-webkit-user-drag: none;
+		-khtml-user-drag: none;
+		-moz-user-drag: none;
+		-o-user-drag: none;
+		user-drag: none;
+	}
+
+	/* #endif */
+
+	@media screen and (min-width: 500px) {
+		.uni-swiper-dot-box {
+			width: 400px;
+			margin: 0 auto;
+			margin-top: 8px;
+		}
+
+		.image {
+			width: 100%;
+		}
+	}
+
+	.uni-bg-red {
+		background-color: #ff5a5f;
+	}
+
+	.uni-bg-green {
+		background-color: #09bb07;
+	}
+
+	.uni-bg-blue {
+		background-color: #007aff;
+	}
+
+	.example-body {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		padding: 20rpx;
+	}
+
+	.example-body-item {
+
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		margin: 15rpx;
+		padding: 15rpx;
+		height: 60rpx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		padding: 0 15rpx;
+		/* #endif */
+		flex: 1;
+		border-color: #e5e5e5;
+		border-style: solid;
+		border-width: 1px;
+		border-radius: 5px;
+	}
+
+	.example-body-item-text {
+		font-size: 28rpx;
+		color: #333;
+	}
+
+	.example-body-dots {
+		width: 16rpx;
+		height: 16rpx;
+		border-radius: 50px;
+		background-color: #333333;
+		margin-left: 10rpx;
+	}
+
+	.active {
+		border-style: solid;
+		border-color: #007aff;
+		border-width: 1px;
+	}
+</style>
+

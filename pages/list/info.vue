@@ -1,6 +1,13 @@
 <template>
   <div class="starting-page">
-    <uni-steps :options="list" active-color="#007AFF" :active="active" direction="column" />
+    <uni-steps :options="list" active-color="#007AFF" :active="active" direction="column">
+      <template v-slot:default="item">
+      	<view class="item">
+          <view class="title">{{item.title}}</view>
+          <image @click="clickItem(item)" :src="item.image" mode="aspectFit"></image>
+      	</view>
+      </template>
+    </uni-steps>
   </div>
 </template>
 <script>
@@ -18,8 +25,9 @@
     },
     data() {
       return {
-        active: 1,
-        list: [{
+        active: 10,
+        list: []
+        /* list: [{
           title: '买家下单',
           desc: '2018-11-11'
         }, {
@@ -31,7 +39,7 @@
         }, {
           title: '交易完成',
           desc: '2018-11-14'
-        }],
+        }], */
         /* orderNum: 88798822004820112,
         isShowInfo: false,
         latitude: 39.909,
@@ -61,7 +69,66 @@
         'startPosition'
       ])
     }, */
+    async onLoad() {
+      this.getList();
+    },
     methods: {
+      ...mapActions("list/index", {
+        getPhotoList:'GET_PHOTO_LIST',
+        getTimeList: 'GET_TIME_LIST',
+        getInfoList: 'GET_INFO_LIST',
+      }),
+      clickItem(item) {
+        let {
+          id
+        } = item;
+        let url = "/pages/list/list?id=" + id;
+        uni.navigateTo({
+          url
+        });
+      },
+      getList(){
+        let params = {
+           tId: "tId202405180002"
+        };
+        this.getTimeList({
+          params
+        }).then((res)=>{
+          let {
+            success,
+            data
+          } = res;
+          if(success){
+            let {
+              photoGroupVOList
+            } = data;
+            let list = photoGroupVOList.map((item)=>{
+              let {
+                pgId: id,
+                title,
+                coverImage,
+                name: desc
+              } = item;
+              let {
+                absolutePath: image,
+                width: w,
+                height: h
+              } = coverImage;
+              return {
+                id,
+                image,
+                w,
+                h,
+                title,
+                desc
+              };
+            });
+            this.list = list;
+            this.active = list.length;
+          }
+        });
+      },
+      
       /* ...mapActions("passenger/index", {
         saveStartPlace: 'SET_START_PLACE',
         saveFormattedStartPlace: 'SET_FORMATTED_START_PLACE',
@@ -198,7 +265,7 @@
   .starting-page {
     width: 100%;
     height: 100vh;
-    overflow: hidden;
+    overflow: auto;
 
     .search-bar-wrapper {
       width: 100%;
