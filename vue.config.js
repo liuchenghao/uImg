@@ -14,12 +14,15 @@ if (
 }
 const config = {
   devServer: {
+    host: "0.0.0.0",
     proxy: {
       '/album': {
         target: 'http://39.106.156.200',
+        changeOrigin: true,
       },
       '/laolao': {
         target: 'http://39.106.156.200',
+        changeOrigin: true,
       },
     },
   },
