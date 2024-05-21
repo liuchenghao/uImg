@@ -54,7 +54,6 @@
 	</view>
 </template>
 <script>
-	// import { guid } from '@/uni_modules/uv-ui-tools/libs/function/index.js'
   import {
     mapActions
   } from 'vuex';
@@ -84,9 +83,6 @@
 			}
 		},
 		async onLoad() {
-      
-			/* const { data } = await this.getData();
-			this.list = data; */
       this.getList();
 		},
 		methods: {
@@ -142,46 +138,6 @@
 			changeList(e){
 				this[e.name].push(e.value);
 			},
-			// 模拟的后端数据
-			getData() {
-				return new Promise((resolve)=>{
-					const imgs = [
-						{ url: 'https://via.placeholder.com/100x110.png/3c9cff/fff',width: 100, height: 110 },
-						{ url: 'https://via.placeholder.com/200x220.png/f9ae3d/fff',width: 200, height: 220 },
-						{ url: 'https://via.placeholder.com/300x340.png/5ac725/fff',width: 300, height: 340 },
-						{ url: 'https://via.placeholder.com/400x400.png/f56c6c/fff',width: 400, height: 400 },
-						{ url: 'https://via.placeholder.com/500x510.png/909399/fff',width: 500, height: 510 },
-						{ url: 'https://via.placeholder.com/600x606.png/3c9cff/fff',width: 600, height: 606 },
-						{ url: 'https://via.placeholder.com/310x422.png/f1a532/fff',width: 310, height: 422 },
-						{ url: 'https://via.placeholder.com/320x430.png/3c9cff/fff',width: 320, height: 430 },
-						{ url: 'https://via.placeholder.com/330x424.png/f9ae3d/fff',width: 330, height: 424 },
-						{ url: 'https://via.placeholder.com/340x435.png/5ac725/fff',width: 340, height: 435 },
-						{ url: 'https://via.placeholder.com/350x440.png/f56c6c/fff',width: 350, height: 440 },
-						{ url: 'https://via.placeholder.com/380x470.png/909399/fff',width: 380, height: 470 }
-					];
-					let list = [];
-					const doFn = (i)=>{
-						const randomIndex = Math.floor(Math.random() * 10);
-						return {
-							id: randomIndex,
-							allowEdit: i==0,
-							image: imgs[randomIndex].url,
-							w: imgs[randomIndex].width,
-							h: imgs[randomIndex].height,
-							title: i % 2 == 0 ? `(${this.list.length + i + 1})体验uv-ui框架`: `(${this.list.length + i +1})uv-ui支持多平台`,
-							desc: i % 2 == 0 ? `(${this.list.length + i + 1})欢迎使用uv-ui，uni-app生态专用的UI框架` : 
-							`(${this.list.length + i})开发者编写一套代码， 可发布到iOS、Android、H5、以及各种小程序`
-						};
-					};
-					// 模拟异步
-					setTimeout(() => {
-						for (let i = 0; i < 20; i++) {
-							list.push(doFn(i));
-						}
-						resolve({ data:list });
-					}, 200);
-				});
-			}
 		}
 	};
 </script>
